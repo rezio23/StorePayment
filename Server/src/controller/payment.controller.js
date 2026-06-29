@@ -6,13 +6,8 @@ const Users = require('../models/users');
 const Products = require('../models/products');
 const Orders = require('../models/orders');
 const Payments = require('../models/payments');
-const { TelegramBot } = require('node-telegram-bot-api');
+const { sendPaymentAlert } = require('../service/telegram.service');
 const { where } = require('sequelize');
-
-// Telegram config
-const BotToken = process.env.TELEGRAM_BOT_TOKEN;
-const ChatID = process.env.TELEGRAM_CHAT_ID;
-const bot = BotToken ? new TelegramBot(BotToken, { polling: false }) : null;
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -194,26 +189,14 @@ const SuccessPayment = async (req, res) => {
             }
 
             // Telegram Alert - only after first confirmed payment
-            if (bot && ChatID && !alreadyPaid) {
-                try {
-                    const user = await Users.findByPk(user_id, { transaction });
-                    const productLines = orders.map(order =>
-                        `• ${order.ProID} × ${order.Qty} = $${Number(order.Total).toFixed(2)}`
-                    ).join('\n');
-
-                    const message = `
-A new order has been paid!
-Order ID: ${order_id}
-User: ${user?.UserName || 'Unknown'} (${user?.Email || 'no email'})
-Total: $${(session.amount_total / 100).toFixed(2)}
-Items:
-${productLines}
-                    `.trim();
-
-                    await bot.sendMessage(ChatID, message);
-                } catch (err) {
-                    console.error('Telegram alert failed:', err.message);
-                }
+            if (!alreadyPaid) {
+                const user = await Users.findByPk(user_id, { transaction });
+                await sendPaymentAlert({
+                    order_id,
+                    user,
+                    orders,
+                    amount_total: session.amount_total
+                });
             }
         }
 

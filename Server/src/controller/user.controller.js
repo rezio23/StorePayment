@@ -4,14 +4,7 @@ const env = require('dotenv').config();
 const scheduler = require('node-schedule');
 const connection = require('../config/db');
 const Users = require('../models/users');
-const {TelegramBot} = require('node-telegram-bot-api');
-
-// KEY
-const BotToken = process.env.TELEGRAM_BOT_TOKEN;
-const ChatID = process.env.TELEGRAM_CHAT_ID;
-
-// Telegram Bot
-const bot = new TelegramBot(BotToken, { polling: false });
+const { sendNewUserAlert } = require('../service/telegram.service');
 
 // CREATE
 const CreateUser = async (req, res) => {
@@ -32,17 +25,7 @@ const CreateUser = async (req, res) => {
         const NewUser = await Users.create({ UserName, Email, Password: HashedPassword });
 
         // Telegram alert message
-        const message = `
-        A new user has been created!
-        UserName: ${NewUser.UserName}
-        Email: ${NewUser.Email}
-        `;
-        
-        try {
-            await bot.sendMessage(ChatID, message);
-        } catch (error) {
-            console.error(error);
-        }
+        await sendNewUserAlert(NewUser);
 
         res.status(201).json({ 
             success: true, 

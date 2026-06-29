@@ -6,13 +6,13 @@ const CART_URL = `${import.meta.env.VITE_API_URL}/user/cart`;
 
 function SkeletonCard() {
   return (
-    <div className="bg-white rounded-xl shadow p-5 flex flex-col animate-pulse">
-      <div className="h-32 bg-gray-200 rounded-lg mb-4" />
-      <div className="h-5 bg-gray-200 rounded w-3/4 mb-2" />
-      <div className="h-4 bg-gray-200 rounded w-1/2 mb-4" />
+    <div className="bg-white rounded-xl border border-slate-100 p-5 flex flex-col animate-pulse">
+      <div className="h-32 bg-slate-200 rounded-lg mb-4" />
+      <div className="h-5 bg-slate-200 rounded w-3/4 mb-2" />
+      <div className="h-4 bg-slate-200 rounded w-1/2 mb-4" />
       <div className="mt-auto flex items-center justify-between pt-4">
-        <div className="h-6 bg-gray-200 rounded w-16" />
-        <div className="h-9 bg-gray-200 rounded w-24" />
+        <div className="h-6 bg-slate-200 rounded w-16" />
+        <div className="h-9 bg-slate-200 rounded w-24" />
       </div>
     </div>
   );
@@ -21,12 +21,12 @@ function SkeletonCard() {
 function Toast({ message, onClose }) {
   if (!message) return null;
   return (
-    <div className="fixed bottom-6 right-6 z-50 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-lg flex items-center gap-3 animate-fade-in">
-      <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3 rounded-lg shadow-lg flex items-center gap-3 animate-fade-in">
+      <svg className="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
       </svg>
       <span className="text-sm font-medium">{message}</span>
-      <button onClick={onClose} className="text-gray-400 hover:text-white">
+      <button onClick={onClose} className="text-slate-400 hover:text-white">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
@@ -46,9 +46,7 @@ export default function Store() {
   const filteredProducts = useMemo(() => {
     const term = search.trim().toLowerCase();
     if (!term) return products;
-    return products.filter((p) =>
-      p.ProName?.toLowerCase().includes(term)
-    );
+    return products.filter((p) => p.ProName?.toLowerCase().includes(term));
   }, [products, search]);
 
   const addToCart = async (product) => {
@@ -87,7 +85,7 @@ export default function Store() {
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-6">
-        <div className="h-8 bg-gray-200 rounded w-48 mb-6 animate-pulse" />
+        <div className="h-8 bg-slate-200 rounded w-48 mb-6 animate-pulse" />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {[...Array(8)].map((_, i) => (
             <SkeletonCard key={i} />
@@ -100,13 +98,13 @@ export default function Store() {
   if (error) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-12 text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
-          <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-100 rounded-full mb-4">
+          <svg className="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
         </div>
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">Failed to load products</h3>
-        <p className="text-gray-500">{error}</p>
+        <h3 className="text-xl font-semibold text-slate-900 mb-2">Failed to load products</h3>
+        <p className="text-slate-500">{error}</p>
       </div>
     );
   }
@@ -116,11 +114,11 @@ export default function Store() {
       <Toast message={toast} onClose={() => setToast(null)} />
 
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 sm:p-12 mb-10">
+      <div className="relative overflow-hidden rounded-2xl bg-white border border-slate-200 p-8 sm:p-12 mb-10">
         <div className="relative z-10 max-w-xl">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-3">Discover Our Collection</h2>
-          <p className="text-indigo-100 text-lg mb-6">Handpicked products with quality you can trust. Shop now and enjoy a seamless checkout experience.</p>
-          <div className="flex items-center gap-2 text-sm font-medium bg-white/20 backdrop-blur-sm w-fit px-4 py-2 rounded-full">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">Discover Our Collection</h2>
+          <p className="text-slate-500 text-lg mb-6">Handpicked products with quality you can trust. Shop now and enjoy a seamless checkout experience.</p>
+          <div className="flex items-center gap-2 text-sm font-medium bg-slate-100 w-fit px-4 py-2 rounded-full text-slate-700">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
             </svg>
@@ -131,16 +129,16 @@ export default function Store() {
 
       {/* Search */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-        <h3 className="text-xl font-semibold text-gray-800">Products</h3>
+        <h3 className="text-xl font-semibold text-slate-900">Products</h3>
         <div className="relative w-full sm:w-80">
           <input
             type="text"
             placeholder="Search products..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 bg-white"
           />
-          <svg className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
@@ -148,21 +146,21 @@ export default function Store() {
 
       {/* Product Grid */}
       {filteredProducts.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-2xl shadow-sm">
-          <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="text-center py-16 bg-white rounded-2xl border border-slate-100">
+          <svg className="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <h3 className="text-lg font-semibold text-gray-800 mb-1">No products found</h3>
-          <p className="text-gray-500">Try a different search term.</p>
+          <h3 className="text-lg font-semibold text-slate-900 mb-1">No products found</h3>
+          <p className="text-slate-500">Try a different search term.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
             <div
               key={product.ProID}
-              className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 p-5 flex flex-col border border-gray-100"
+              className="group bg-white rounded-2xl border border-slate-100 hover:border-slate-300 hover:shadow-md transition-all duration-300 p-5 flex flex-col"
             >
-              <div className="relative overflow-hidden rounded-xl mb-4 bg-gray-100 aspect-[4/3]">
+              <div className="relative overflow-hidden rounded-xl mb-4 bg-slate-100 aspect-[4/3]">
                 {product.ImageURL ? (
                   <img
                     src={product.ImageURL}
@@ -170,7 +168,7 @@ export default function Store() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center text-gray-400">
+                  <div className="w-full h-full flex flex-col items-center justify-center text-slate-400">
                     <svg className="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
@@ -178,23 +176,23 @@ export default function Store() {
                   </div>
                 )}
                 {product.Qty <= 0 && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                    <span className="bg-white/90 text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
+                  <div className="absolute inset-0 bg-slate-900/40 flex items-center justify-center">
+                    <span className="bg-white/90 text-slate-900 px-3 py-1 rounded-full text-sm font-semibold">
                       Out of stock
                     </span>
                   </div>
                 )}
               </div>
 
-              <h3 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-1">{product.ProName}</h3>
-              <p className="text-gray-500 text-sm mb-3">{product.Qty > 0 ? `${product.Qty} in stock` : 'Out of stock'}</p>
+              <h3 className="text-lg font-semibold text-slate-900 mb-1 line-clamp-1">{product.ProName}</h3>
+              <p className="text-slate-500 text-sm mb-3">{product.Qty > 0 ? `${product.Qty} in stock` : 'Out of stock'}</p>
 
-              <div className="mt-auto flex items-center justify-between pt-3 border-t border-gray-100">
-                <span className="text-xl font-bold text-indigo-600">${Number(product.Price).toFixed(2)}</span>
+              <div className="mt-auto flex items-center justify-between pt-3 border-t border-slate-100">
+                <span className="text-xl font-bold text-slate-900">${Number(product.Price).toFixed(2)}</span>
                 <button
                   onClick={() => addToCart(product)}
                   disabled={addingId === product.ProID || product.Qty <= 0}
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition flex items-center gap-2"
+                  className="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-800 disabled:bg-slate-300 disabled:cursor-not-allowed transition flex items-center gap-2"
                 >
                   {addingId === product.ProID ? (
                     <>

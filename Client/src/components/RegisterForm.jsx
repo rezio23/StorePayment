@@ -28,9 +28,9 @@ export default function RegisterForm({ onRegister }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-8 rounded-2xl shadow-md w-full max-w-sm border border-gray-100">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-1">Create account</h2>
-      <p className="text-gray-500 text-sm mb-6">Join us today and start shopping</p>
+    <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm w-full max-w-sm border border-slate-100">
+      <h2 className="text-2xl font-semibold text-slate-900 mb-1">Create account</h2>
+      <p className="text-slate-500 text-sm mb-6">Join us today and start shopping</p>
 
       {error && (
         <div className="mb-5 p-3 bg-red-50 border border-red-100 rounded-lg flex items-start gap-2">
@@ -42,19 +42,19 @@ export default function RegisterForm({ onRegister }) {
       )}
 
       {success && (
-        <div className="mb-5 p-3 bg-green-50 border border-green-100 rounded-lg flex items-start gap-2">
-          <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="mb-5 p-3 bg-slate-100 border border-slate-200 rounded-lg flex items-start gap-2">
+          <svg className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p className="text-green-700 text-sm">{success}</p>
+          <p className="text-slate-700 text-sm">{success}</p>
         </div>
       )}
 
       <div className="space-y-4">
         <div>
-          <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1.5">Username</label>
+          <label htmlFor="username" className="block text-sm font-medium text-slate-700 mb-1.5">Username</label>
           <div className="relative">
-            <svg className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
             <input
@@ -64,15 +64,15 @@ export default function RegisterForm({ onRegister }) {
               value={UserName}
               onChange={(e) => setUserName(e.target.value)}
               required
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+              className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition bg-white"
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="register-email" className="block text-sm font-medium text-gray-700 mb-1.5">Email address</label>
+          <label htmlFor="register-email" className="block text-sm font-medium text-slate-700 mb-1.5">Email address</label>
           <div className="relative">
-            <svg className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
             </svg>
             <input
@@ -82,15 +82,15 @@ export default function RegisterForm({ onRegister }) {
               value={Email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+              className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition bg-white"
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="register-password" className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+          <label htmlFor="register-password" className="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
           <div className="relative">
-            <svg className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
             <input
@@ -100,12 +100,12 @@ export default function RegisterForm({ onRegister }) {
               value={Password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full pl-10 pr-12 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+              className="w-full pl-10 pr-12 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition bg-white"
             />
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
               aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? (
@@ -126,7 +126,7 @@ export default function RegisterForm({ onRegister }) {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full mt-6 bg-green-600 text-white py-2.5 rounded-xl hover:bg-green-700 transition font-medium flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+        className="w-full mt-6 bg-slate-900 text-white py-2.5 rounded-xl hover:bg-slate-800 transition font-medium flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {isLoading ? (
           <>
