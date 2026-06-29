@@ -4,9 +4,10 @@ const connection = require('../config/db');
 const Orders = connection.define(
     'Orders',
     {
-        OrdID: {
-            type: DataTypes.STRING(20),
+        id: {
+            type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
             allowNull: false
         },
         UserID: {
@@ -16,6 +17,25 @@ const Orders = connection.define(
         ProID: {
             type: DataTypes.STRING(10),
             allowNull: false
+        },
+        Qty: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                min: 1
+            }
+        },
+        Total: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false,
+            validate: {
+                min: 0
+            }
+        },
+        Status: {
+            type: DataTypes.ENUM('Pending', 'Paid', 'Cancelled'),
+            allowNull: false,
+            defaultValue: 'Pending'
         }
     },
     {

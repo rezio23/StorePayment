@@ -4,13 +4,14 @@ const connection = require('../config/db');
 const Payments = connection.define(
     'Payments',
     {
-        PayID: {
-            type: DataTypes.STRING(20),
+        id: {
+            type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
             allowNull: false
         },
         OrdID: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         Amount: {
@@ -34,21 +35,7 @@ const Payments = connection.define(
     },
     {
         tableName: 'p_payments',
-        timestamps: true,
-        hooks: {
-            beforeCreate: async (payment) => {
-                const lastPayment = await Payments.findOne({
-                    order: [['PayID', 'DESC']]
-                });
-
-                if (!lastPayment) {
-                    payment.PayID = 'PAY001';
-                } else {
-                    const lastNumber = parseInt(lastPayment.PayID.slice(3), 10);
-                    payment.PayID = `PAY${String(lastNumber + 1).padStart(3, '0')}`;
-                }
-            }
-        }
+        timestamps: true
     }
 );
 

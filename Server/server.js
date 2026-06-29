@@ -10,7 +10,7 @@ const PaymentController = require('./src/routes/payment.route');
 const sequelize = require('./src/config/db');
 const { Users, Products, Orders, Payments, Cart } = require('./src/models/mappingContext');
 
-sequelize.sync({ alter: true }).then(console.log('Database Updated!'));
+sequelize.sync().then(() => console.log('Database Updated!'));
 
 const app = express();
 app.use(cors());
