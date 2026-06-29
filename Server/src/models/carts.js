@@ -7,7 +7,7 @@ const Cart = connection.define(
         CartID: {
             type: DataTypes.STRING(20),
             primaryKey: true,
-            allowNull: false
+            allowNull: true
         },
         UserID: {
             type: DataTypes.STRING(10),

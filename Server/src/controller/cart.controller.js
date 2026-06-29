@@ -6,7 +6,7 @@ const Users = require('../models/users');
 // GET CART
 const GetCart = async (req, res) => {
     try {
-        const { UserID } = req.body;
+        const UserID = req.user.ID;
 
         const SelectedCart = await Cart.findAll({
             where: { UserID },
@@ -28,9 +28,11 @@ const GetCart = async (req, res) => {
 // CREATE
 const AddCart = async (req, res) => {
     try {
-        const { UserID, ProID, Qty } = req.body;
+        const UserID = req.user.ID;
+        const { ProID, Qty } = req.body;
 
         if(!UserID || !ProID || !Qty) return res.status(400).json({ message: 'All field required!'});
+        if(Qty <= 0) return res.status(400).json({ message: 'Quantity must be at least 1!' });
 
         // Check if existed
         const SelectedUser = await Users.findByPk(UserID);
@@ -53,7 +55,7 @@ const AddCart = async (req, res) => {
         if(ExistedCart){
             const UpdateQty = ExistedCart.Qty + Qty;
 
-            if(UpdateQty > SelectedProduct.Qty) return res.status(400).json({ message: 'Stock is not enough for this quantity!'});
+            if(UpdateQty > SelectedProduct.Qty || SelectedProduct.Qty <= 0 ) return res.status(400).json({ message: 'Stock is not enough for this quantity!'});
 
             ExistedCart.Qty = UpdateQty;
             await ExistedCart.save();
@@ -65,12 +67,16 @@ const AddCart = async (req, res) => {
             })
         }
 
+        if (SelectedProduct.Qty <= 0) {
+            return res.status(400).json({ message: 'Product is out of stock!' });
+        }
+
         // Add new
         const AddNewCart = await Cart.create({
             UserID,
             ProID,
             Qty,
-            Total: SelectedProduct.Price * Qty,
+            Total: Number(SelectedProduct.Price) * Number(Qty),
         })
 
         res.status(201).json({
@@ -79,9 +85,11 @@ const AddCart = async (req, res) => {
             data: AddNewCart
         })
     } catch (error) {
+        console.error('AddCart error:', error);
         res.status(500).json({
             message: 'Internal Server Error!',
-            error: error.message
+            error: error.message,
+            details: error.original?.sqlMessage || null
         })
     }
 }
@@ -92,7 +100,10 @@ const UpdateCart = async (req, res) => {
         const { CartID, Qty } = req.body;
         const SelectedCart = await Cart.findByPk(CartID);
 
+        if (Qty <= 0) return res.status(400).json({ message: 'Quantity must be at least 1!' });
+
         if(!SelectedCart) return res.status(404).json({ message: 'Cart not found!'})
+        if(SelectedCart.UserID !== req.user.ID) return res.status(403).json({ message: 'Not authorized!' });
 
         const SelectedProduct = await Products.findByPk(SelectedCart.ProID);
 
@@ -122,7 +133,8 @@ const DeleteCart = async (req, res) => {
 
         const SelectedCart = await Cart.findByPk(CartID);
 
-        if(!SelectedCart) return res.status(404).json({ message: 'Cart not found!'})
+        if(!SelectedCart) return res.status(404).json({ message: 'Cart not found!' })
+        if(SelectedCart.UserID !== req.user.ID) return res.status(403).json({ message: 'Not authorized!' });
 
         await SelectedCart.destroy();
 

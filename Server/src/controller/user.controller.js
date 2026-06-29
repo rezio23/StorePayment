@@ -21,13 +21,17 @@ const CreateUser = async (req, res) => {
         // Validation
         if(!UserName || !Email || !Password ) return res.status(400).json({ message: 'All Field Required!'});
 
-        // Hash Password
+        // Check if email existed
+        // const existedUser = await Users.findOne({ where: Email });
+        // if(existedUser) return res.status(400).json({ message: 'This email is already existed!'})
+
+        // Hash password
         const HashedPassword = await bcrypt.hash(Password, 10);
 
         // Push to database
         const NewUser = await Users.create({ UserName, Email, Password: HashedPassword });
 
-        // Telegram Alert Message
+        // Telegram alert message
         const message = `
         A new user has been created!
         UserName: ${NewUser.UserName}
@@ -71,7 +75,7 @@ const LoginUser = async (req, res) => {
 
         // Compare password
         const IsCorrectPassword = await bcrypt.compare(Password, SelectedUser.Password);
-        if(!IsCorrectPassword) return res.status(401).json('Invalid Credential!');
+        if(!IsCorrectPassword) return res.status(401).json({ message: 'Invalid Credential!'});
 
         // JWT
         const Token = jwt.sign(
@@ -106,7 +110,7 @@ const LoginUser = async (req, res) => {
 // SELECT
 const SelectUser = async (req, res) => {
     try {
-        const { id } = req.body;
+        const id = req.user.ID;
         
         const SelectedUser = await Users.findOne({ 
             where: { UserID: id }
